@@ -1,4 +1,6 @@
 import type { Config } from "tailwindcss";
+import daisyui from 'daisyui';
+import daisyUIThemes from "daisyui/src/theming/themes";
 
 const config: Config = {
   content: [
@@ -15,6 +17,18 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  daisyui: {
+    themes: [
+      "light",
+      {
+        black: {
+          ...daisyUIThemes["black"],
+          primary: "rgb(29, 155, 240)",
+          secondary: "rgb(24, 24, 24)",
+        },
+      },
+    ],
+  },
+  plugins: [daisyui],
 };
 export default config;

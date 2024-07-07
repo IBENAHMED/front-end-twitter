@@ -1,0 +1,27 @@
+{
+    "name": "TwitterChat",
+    "short_name": "chat",
+    "theme_color": "#FFFFFF",
+    "background_color": "#FFFFFF",
+    "display": "standalone",
+    "orientation": "any",
+    "scope": "/",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "/chat-192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/chat-256.png",
+            "type": "image/png",
+            "sizes": "256x256"
+        },
+        {
+            "src": "/chat-512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}
