@@ -25,6 +25,8 @@ const page = () => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
+            setIsPending(true);
+
             let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
                 method: "POST",
                 headers: {
@@ -38,13 +40,14 @@ const page = () => {
             if (data.token) {
 
                 setCookie("jwt", data.token);
-                setIsPending(true);
                 router.push('/home');
                 toast.success(`user login successfully`);
 
             } else {
                 toast.error(`${data.error}`);
-            }
+            };
+
+            setIsPending(false);
 
         } catch (err) {
             setIisError(true)
@@ -60,7 +63,7 @@ const page = () => {
             <div className='flex-1 hidden lg:flex items-center  justify-center'>
                 <XSvg className='lg:w-2/3 fill-white' />
             </div>
-            <div className='flex-1 flex flex-col justify-center items-center'>
+            <div className='mx-4 flex-1 flex flex-col justify-center items-center'>
                 <form className='flex gap-4 flex-col' onSubmit={handleSubmit}>
                     <XSvg className='w-24 lg:hidden fill-white' />
                     <h1 className='text-4xl font-extrabold text-white'>{"Let's"} go.</h1>
@@ -68,7 +71,7 @@ const page = () => {
                         <MdOutlineMail />
                         <input
                             type='text'
-                            className='grow'
+                            className='grow grow w-full'
                             placeholder='email'
                             name='email'
                             onChange={handleInputChange}
@@ -80,7 +83,7 @@ const page = () => {
                         <MdPassword />
                         <input
                             type='password'
-                            className='grow'
+                            className='grow grow w-full'
                             placeholder='Password'
                             name='password'
                             onChange={handleInputChange}

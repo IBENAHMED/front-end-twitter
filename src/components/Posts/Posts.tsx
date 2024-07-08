@@ -130,25 +130,31 @@ export const Post = ({ post, reloadPosts }: any) => {
                     </Link>
                 </div>
                 <div className='flex flex-col flex-1'>
-                    <div className='flex gap-2 items-center'>
-                        <Link href={`/profile/${postOwner.username}`} className='font-bold'>
-                            {postOwner.fullName}
-                        </Link>
-                        <span className='text-gray-700 flex gap-1 text-sm'>
-                            <Link href={`/profile/${postOwner.username}`}>@{postOwner.username}</Link>
-                            <span>·</span>
-                            <span>{formatDate(post.updatedAt)}</span>
-                        </span>
-                        {isMyPost && (
-                            <span className='flex justify-end flex-1'>
-                                {isLoading ?
-                                    <LoadingSpinner size='sm' /> :
-                                    <FaTrash className='cursor-pointer hover:text-red-500' onClick={handleDeletePost} />}
+                    <div className='flex gap-2 items-center flex-wrap'>
+                        <div>
+                            <Link href={`/profile/${postOwner.username}`} className='font-bold'>
+                                {postOwner.fullName}
+                            </Link>
+                        </div>
+                        <div>
+                            <span className='text-gray-700 flex gap-1 text-sm'>
+                                <Link href={`/profile/${postOwner.username}`}>@{postOwner.username}</Link>
+                                <span>·</span>
+                                <span>{formatDate(post.updatedAt)}</span>
                             </span>
-                        )}
+                        </div>
+                        <div>
+                            {isMyPost && (
+                                <span className='flex justify-end flex-1'>
+                                    {isLoading ?
+                                        <LoadingSpinner size='sm' /> :
+                                        <FaTrash className='cursor-pointer hover:text-red-500' onClick={handleDeletePost} />}
+                                </span>
+                            )}
+                        </div>
                     </div>
                     <div className='flex flex-col gap-3 overflow-hidden'>
-                        <span>{post.text}</span>
+                        <p>{post.text}</p>
                         {post.img && (
                             <img
                                 src={post.img}
@@ -158,7 +164,7 @@ export const Post = ({ post, reloadPosts }: any) => {
                         )}
                     </div>
                     <div className='flex justify-between mt-3'>
-                        <div className='flex gap-4 items-center w-2/3 justify-between'>
+                        <div className='flex flex-wrap gap-4 items-center w-2/3 justify-between'>
                             <div
                                 className='flex gap-1 items-center cursor-pointer group'
                                 onClick={() => commentsModal.current.showModal()}

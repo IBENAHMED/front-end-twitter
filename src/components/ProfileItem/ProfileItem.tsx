@@ -461,7 +461,7 @@ const ProfileItem = ({ username }: any) => {
                                                     rel='noreferrer'
                                                     className='text-sm text-blue-500 hover:underline'
                                                 >
-                                                    youtube.com/@asaprogrammer_
+                                                    youtube.com
                                                 </a>
                                             </>
                                         </div>

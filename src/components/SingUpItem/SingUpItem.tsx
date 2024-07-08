@@ -24,6 +24,7 @@ const SingUpItem = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+        setIsPending(true);
         try {
 
             let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/sigup`, {
@@ -39,14 +40,14 @@ const SingUpItem = () => {
             if (data) {
 
                 setCookie("jwt", data.token);
-                setIsPending(true);
                 router.push('/home');
-                toast.success(`${data.message}`);
+                toast.success(`user sign in successfully`);
 
             } else {
                 toast.error(`${data.error}`);
             }
 
+            setIsPending(false);
         } catch (err) {
             console.log(err)
         }
@@ -71,7 +72,7 @@ const SingUpItem = () => {
                         <MdOutlineMail />
                         <input
                             type='email'
-                            className='grow'
+                            className='grow w-full'
                             placeholder='Email'
                             name='email'
                             onChange={handleInputChange}
@@ -83,7 +84,7 @@ const SingUpItem = () => {
                             <FaUser />
                             <input
                                 type='text'
-                                className='grow '
+                                className='grow w-full'
                                 placeholder='Username'
                                 name='username'
                                 onChange={handleInputChange}
@@ -94,7 +95,7 @@ const SingUpItem = () => {
                             <MdDriveFileRenameOutline />
                             <input
                                 type='text'
-                                className='grow'
+                                className='grow w-full'
                                 placeholder='Full Name'
                                 name='fullName'
                                 onChange={handleInputChange}
@@ -106,7 +107,7 @@ const SingUpItem = () => {
                         <MdPassword />
                         <input
                             type='password'
-                            className='grow'
+                            className='grow w-full'
                             placeholder='Password'
                             name='password'
                             onChange={handleInputChange}
