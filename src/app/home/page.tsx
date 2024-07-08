@@ -29,7 +29,6 @@ const page = () => {
             });
 
             let data = await res.json();
-
             setDataPost(data);
 
         } catch (error: any) {
