@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import toast from 'react-hot-toast';
 import XSvg from '../Svgs/X';
 import { MdDriveFileRenameOutline, MdOutlineMail, MdPassword } from 'react-icons/md';
 import { FaUser } from 'react-icons/fa';
+import { userContextProvider } from '@/context/UserContext';
 
 const SingUpItem = () => {
     let [isPending, setIsPending] = useState(false);
@@ -18,6 +19,8 @@ const SingUpItem = () => {
         fullName: "",
         password: "",
     });
+
+    let { setCookie } = useContext(userContextProvider);
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
@@ -33,8 +36,9 @@ const SingUpItem = () => {
 
             let data = await res.json();
 
-            if (data.message) {
+            if (data) {
 
+                setCookie("jwt", data.token);
                 setIsPending(true);
                 router.push('/home');
                 toast.success(`${data.message}`);
