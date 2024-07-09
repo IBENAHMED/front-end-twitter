@@ -24,32 +24,36 @@ const SingUpItem = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        setIsPending(true);
-        try {
+        if (formData.email !== "" && formData.username !== "" && formData.fullName !== "" && formData.password !== "") {
+            setIsPending(true);
+            try {
 
-            let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/sigup`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
+                let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/sigup`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
 
-            let data = await res.json();
+                let data = await res.json();
 
-            if (data) {
+                if (data) {
 
-                setCookie("jwt", data.token);
-                router.push('/home');
-                toast.success(`user sign in successfully`);
+                    setCookie("jwt", data.token);
+                    router.push('/home');
+                    toast.success(`user sign in successfully`);
 
-            } else {
-                toast.error(`${data.error}`);
+                } else {
+                    toast.error(`${data.error}`);
+                }
+
+                setIsPending(false);
+            } catch (err) {
+                console.log(err)
             }
-
-            setIsPending(false);
-        } catch (err) {
-            console.log(err)
+        } else {
+            toast.error(`We do not accept empty fields`);
         }
     };
 
