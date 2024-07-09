@@ -352,7 +352,7 @@ const ProfileItem = ({ username }: any) => {
 
     useEffect(() => {
         fetchingProfileData(username);
-    }, [username]);
+    }, [username, userCurrent]);
     // }, [username, userCurrent]);
 
     // check if i already follow this user
