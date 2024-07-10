@@ -38,13 +38,15 @@ const SingUpItem = () => {
 
                 let data = await res.json();
 
-                if (data) {
+                if (res.status == 201) {
 
                     setCookie("jwt", data.token);
                     router.push('/home');
                     toast.success(`user sign in successfully`);
 
-                } else {
+                }
+
+                if (res.status == 400) {
                     toast.error(`${data.error}`);
                 }
 
