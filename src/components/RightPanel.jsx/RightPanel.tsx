@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { userContextProvider } from "@/context/UserContext";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import avatarPlaceholder from '../../assets/img/avatar-placeholder.png';
+import toast from "react-hot-toast";
 
 export const RightPanelSkeleton = () => {
     return (
@@ -63,7 +64,7 @@ const RightPanel = () => {
             });
 
             if (res.status == 200) {
-                getSuggest();
+                toast.success("following user successfully")
             };
             setIsLoadingFollwo(false);
         } catch (error: any) {
@@ -145,7 +146,7 @@ const RightPanel = () => {
                                             className='btn bg-white text-black hover:bg-white hover:opacity-90 rounded-full btn-sm'
                                             onClick={(e) => { e.preventDefault(); handlingFollow(user._id) }}
                                         >
-                                            {isLoadingFollwo ? <LoadingSpinner size="sm" /> : "Follow"}
+                                            Follow
                                         </button>
                                     </div>
                                 </Link>

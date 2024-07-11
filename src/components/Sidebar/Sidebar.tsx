@@ -16,7 +16,6 @@ import avatarPlaceholder from '../../assets/img/avatar-placeholder.png';
 
 const Sidebar = () => {
 
-    let [isPending, setIsPending] = useState(false);
     let router = useRouter();
 
     const { cookies, user, removeCookie } = useContext(userContextProvider);

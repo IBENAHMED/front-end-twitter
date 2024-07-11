@@ -276,7 +276,6 @@ const ProfileItem = ({ username }: any) => {
     };
 
     let handlingUploadImg = async () => {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/updateUser`;
         try {
             let res;
             try {
