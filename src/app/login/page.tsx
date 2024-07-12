@@ -71,7 +71,7 @@ const page = () => {
                         <MdOutlineMail />
                         <input
                             type='text'
-                            className='grow grow w-full'
+                            className='grow w-full'
                             placeholder='email'
                             name='email'
                             onChange={handleInputChange}
@@ -83,7 +83,7 @@ const page = () => {
                         <MdPassword />
                         <input
                             type='password'
-                            className='grow grow w-full'
+                            className='grow w-full'
                             placeholder='Password'
                             name='password'
                             onChange={handleInputChange}
