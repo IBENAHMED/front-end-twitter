@@ -13,6 +13,7 @@ const UserContext = ({ children }: any) => {
     const [cookies, setCookie, removeCookie] = useCookies(['jwt']);
     let [user, setUser]: any = useState(null);
     let [isPending, setIsPending] = useState(false);
+    let [sideBarEffect, setSideBarEffect] = useState(false);
 
     let getUserData = async () => {
 
@@ -42,7 +43,8 @@ const UserContext = ({ children }: any) => {
 
     let data = {
         user,
-        cookies, setCookie, removeCookie
+        cookies, setCookie, removeCookie,
+        sideBarEffect, setSideBarEffect
     }
 
     return (

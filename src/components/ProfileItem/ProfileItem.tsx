@@ -12,6 +12,7 @@ import toast from 'react-hot-toast';
 
 import cover from '../../assets/img/cover.png';
 import avatarPlaceholder from '../../assets/img/avatar-placeholder.png';
+import fetchingProfileDataUser from '@/utils/fetchingProfileData';
 
 export const ProfileHeaderSkeleton = () => {
     return (
@@ -48,7 +49,7 @@ export const EditProfileModal = () => {
     });
     const [isPanding, setIsPanding] = useState(false);
 
-    let { cookies } = useContext(userContextProvider);
+    let { cookies, sideBarEffect, setSideBarEffect } = useContext(userContextProvider);
 
     let handlingEditProfile = async (e: any) => {
         e.preventDefault();
@@ -65,6 +66,10 @@ export const EditProfileModal = () => {
                     },
                     body: JSON.stringify(formData),
                 });
+
+                if (res.ok) {
+                    setSideBarEffect(!sideBarEffect)
+                }
 
                 if (!res.ok) {
                     return toast.error("Invalid Password");
@@ -191,28 +196,9 @@ const ProfileItem = ({ username }: any) => {
     const coverImgRef: any = useRef(null);
     const profileImgRef: any = useRef(null);
 
-    let { user, cookies } = useContext(userContextProvider);
+    let { user, cookies, sideBarEffect, setSideBarEffect } = useContext(userContextProvider);
 
     let isMyProfile = userCurrent && userCurrent._id == user.user._id
-
-    let fetchingProfileData = async (username: any) => {
-        try {
-
-            let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/getUserProfile/${username}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'token-auth': cookies.jwt,
-                }
-            });
-            let data = await res.json();
-
-
-            setUserCurrent(data.user);
-        } catch (error) {
-            throw new Error("Invalid Error Server");
-        }
-    };
 
     let getPostes = async () => {
         if (feedTypeDetected) {
@@ -292,9 +278,14 @@ const ProfileItem = ({ username }: any) => {
                     }),
                 });
 
+                if (res.ok) {
+                    setSideBarEffect(!sideBarEffect);
+                };
+
                 if (!res.ok) {
                     throw new Error("HTTP Error");
-                }
+                };
+
             } catch (error) {
                 throw new Error("Invalid Server Error" + error);
             }
@@ -350,9 +341,13 @@ const ProfileItem = ({ username }: any) => {
     }, [feedTypeDetected]);
 
     useEffect(() => {
-        fetchingProfileData(username);
-    }, [username]);
-    // }, [username, userCurrent]);
+        let userProfile = async () => {
+            let data = await fetchingProfileDataUser(username, cookies);
+            setUserCurrent(data);
+        }
+        userProfile();
+
+    }, [username, sideBarEffect]);
 
     // check if i already follow this user
     useEffect(() => {

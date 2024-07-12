@@ -13,16 +13,27 @@ import toast from 'react-hot-toast';
 import { userContextProvider } from '@/context/UserContext';
 
 import avatarPlaceholder from '../../assets/img/avatar-placeholder.png';
+import fetchingProfileDataUser from '@/utils/fetchingProfileData';
 
 const Sidebar = () => {
 
     let router = useRouter();
 
-    const { cookies, user, removeCookie } = useContext(userContextProvider);
+    const { cookies, user, sideBarEffect, removeCookie } = useContext(userContextProvider);
 
     const [isLoading, setIsLoading] = useState(true);
+    const [userData, setUserData]: any = useState(null);
 
     useEffect(() => {
+
+        if (user) {
+            let userProfile = async () => {
+                let data = await fetchingProfileDataUser(user.user.username, cookies);
+                setUserData(data);
+            }
+            userProfile();
+        }
+
         const checkAuth = async () => {
             if (cookies && cookies.jwt) {
                 setIsLoading(false);
@@ -32,7 +43,7 @@ const Sidebar = () => {
         };
 
         checkAuth();
-    }, [cookies]);
+    }, [cookies, sideBarEffect]);
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
@@ -40,7 +51,7 @@ const Sidebar = () => {
             removeCookie("jwt");
             router.push('/login');
             toast.success(`user logout successfully `);
-        }
+        };
     };
 
     if (isLoading) { // whaiting to see result of cookies  if exsist or not
@@ -90,7 +101,7 @@ const Sidebar = () => {
 
                         <li className='flex justify-center md:justify-start'>
                             <Link
-                                href={`/profile/${user && user.user?.username}`}
+                                href={`/profile/${userData && userData?.username}`}
                                 className='flex gap-3 items-center hover:bg-stone-900 transition-all rounded-full duration-300 py-2 pl-2 pr-4 max-w-fit cursor-pointer'
                             >
                                 <FaUser className='w-6 h-6' />
@@ -98,20 +109,20 @@ const Sidebar = () => {
                             </Link>
                         </li>
                     </ul>
-                    {user && user.user && (
+                    {userData && userData && (
                         <Link
-                            href={`/profile/${user && user.user.username}`}
+                            href={`/profile/${userData && userData.username}`}
                             className='mt-auto mb-10 flex gap-2 items-start transition-all duration-300 hover:bg-[#181818] py-2 px-4 rounded-full'
                         >
                             <div className='avatar hidden md:inline-flex'>
                                 <div className='w-8 rounded-full'>
-                                    <img src={user && user.user?.profileImg || avatarPlaceholder.src} />
+                                    <img src={userData && userData?.profileImg || avatarPlaceholder.src} />
                                 </div>
                             </div>
                             <div className='flex justify-between flex-1'>
                                 <div className='hidden md:block'>
-                                    <p className='text-white font-bold text-sm w-20 truncate'>{user && user.user?.fullName}</p>
-                                    <p className='text-slate-500 text-sm'>@{user && user.user?.username}</p>
+                                    <p className='text-white font-bold text-sm w-20 truncate'>{userData && userData?.fullName}</p>
+                                    <p className='text-slate-500 text-sm'>@{userData && userData?.username}</p>
                                 </div>
                                 <BiLogOut
                                     onClick={(e: any) => handleSubmit(e)}
