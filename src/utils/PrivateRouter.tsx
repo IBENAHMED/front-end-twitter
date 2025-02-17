@@ -1,43 +1,42 @@
 "use client"
 
-import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
-import SingUpItem from "@/components/SingUpItem/SingUpItem";
-import { userContextProvider } from "@/context/UserContext";
-import { useContext, useEffect, useState } from "react";
+import {useContext, useEffect, useState} from "react"
+import {userContextProvider} from "@/context/UserContext"
+
+import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner"
+import SingUpItem from "@/components/SingUpItem/SingUpItem"
 
 const withAuth = (Component: any) => {
-    const Auth = (props: any) => {
-        const { cookies } = useContext(userContextProvider);
-        const [isLoading, setIsLoading] = useState(true);
+  const Auth = (props: any) => {
+    const {cookies} = useContext(userContextProvider)
+    const [isLoading, setIsLoading] = useState(true)
 
-        useEffect(() => {
-            const checkAuth = async () => {
-                if (cookies && cookies.jwt) {
-                    setIsLoading(false);
-                } else {
-                    setIsLoading(false);
-                }
-            };
-
-            checkAuth();
-        }, [cookies]);
-
-        if (isLoading) { // whaiting to see result of cookies  if exsist or not
-            return (
-                <div className="h-screen flex justify-center items-center">
-                    <LoadingSpinner size="lg" />
-                </div>
-            );
-        }
-
+    useEffect(() => {
+      const checkAuth = async () => {
         if (cookies && cookies.jwt) {
-            return <Component {...props} />;
+          setIsLoading(false)
         } else {
-            return <SingUpItem />;
+          setIsLoading(false)
         }
+      }
+      checkAuth()
+    }, [cookies])
 
-    };
-    return Auth;
-};
+    if (isLoading) {
+      return (
+        <div className='h-screen flex justify-center items-center'>
+          <LoadingSpinner size='lg' />
+        </div>
+      )
+    }
 
-export default withAuth;
+    if (cookies && cookies.jwt) {
+      return <Component {...props} />
+    } else {
+      return <SingUpItem />
+    }
+  }
+  return Auth
+}
+
+export default withAuth
