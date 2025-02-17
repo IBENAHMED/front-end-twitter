@@ -1,14 +1,10 @@
 "use client"
-import SingUpItem from '@/components/SingUpItem/SingUpItem';;
-import React from 'react'
+
+import React from "react"
+import SingUpItem from "@/components/SingUpItem/SingUpItem"
 
 const page = () => {
-
-  return (
-    <div>
-      <SingUpItem />
-    </div>
-  );
+  return <SingUpItem />
 }
 
 export default page

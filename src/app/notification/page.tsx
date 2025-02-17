@@ -1,16 +1,11 @@
 "use client"
 
-import NotificationItem from '@/components/NotificationItem/NotificationItem';
-import withAuth from '@/utils/PrivateRouter';
-import React from 'react'
+import React from "react"
+import withAuth from "@/utils/PrivateRouter"
+import NotificationItem from "@/components/NotificationItem/NotificationItem"
 
 const page = () => {
-
-    return (
-        <>
-            <NotificationItem />
-        </>
-    );
-};
+  return <NotificationItem />
+}
 
 export default withAuth(page)
